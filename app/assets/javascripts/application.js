@@ -14,3 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require highcharts/highcharts-more
+//= require highcharts/highcharts
+//= require highcharts/highstock
+//= require highcharts/modules/exporting
+
