@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'resource/:resource', to: 'resource#show'
+
   root 'dash#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
