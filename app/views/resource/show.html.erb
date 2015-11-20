@@ -1,10 +1,8 @@
 <h1>Resource#show</h1>
 <%= @resource %>
-<%= high_chart("water_chart", @chart) %>
+<%= line_chart(*@resource_vars) %>
 
 <br />
 
 <!== clickable chart==>
-<%= high_chart("water_graph", @graph) do |w| %>
-	<%=raw "options.plotOptions.series.point.events.click = function() { location.href = 'http://duckduckgo.com'}" %>
-<% end %>
+<%= bar_chart(*@resource_vars) %>
