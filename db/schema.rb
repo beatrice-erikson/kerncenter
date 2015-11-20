@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151111220010) do
+ActiveRecord::Schema.define(version: 20151120230330) do
 
   create_table "measurements", force: :cascade do |t|
     t.integer  "sensor_id"
@@ -25,32 +25,37 @@ ActiveRecord::Schema.define(version: 20151111220010) do
     t.string "name"
   end
 
-  create_table "room_program_time_mappings", force: :cascade do |t|
+  create_table "room_program_time_maps", force: :cascade do |t|
     t.integer  "room_id"
     t.integer  "program_id"
     t.datetime "start"
     t.datetime "end"
   end
 
-  add_index "room_program_time_mappings", ["program_id"], name: "index_room_program_time_mappings_on_program_id"
-  add_index "room_program_time_mappings", ["room_id"], name: "index_room_program_time_mappings_on_room_id"
+  add_index "room_program_time_maps", ["program_id"], name: "index_room_program_time_maps_on_program_id"
+  add_index "room_program_time_maps", ["room_id"], name: "index_room_program_time_maps_on_room_id"
 
   create_table "rooms", force: :cascade do |t|
-    t.string  "name"
-    t.integer "sensor_id"
-  end
-
-  add_index "rooms", ["sensor_id"], name: "index_rooms_on_sensor_id"
-
-  create_table "sensor_types", force: :cascade do |t|
     t.string "name"
-    t.string "resource"
   end
 
   create_table "sensors", force: :cascade do |t|
-    t.integer "sensor_type_id"
+    t.integer "subtype_id"
+    t.integer "room_id"
   end
 
-  add_index "sensors", ["sensor_type_id"], name: "index_sensors_on_sensor_type_id"
+  add_index "sensors", ["room_id"], name: "index_sensors_on_room_id"
+  add_index "sensors", ["subtype_id"], name: "index_sensors_on_subtype_id"
+
+  create_table "subtypes", force: :cascade do |t|
+    t.integer "type_id"
+    t.string  "name"
+  end
+
+  add_index "subtypes", ["type_id"], name: "index_subtypes_on_type_id"
+
+  create_table "types", force: :cascade do |t|
+    t.string "resource"
+  end
 
 end

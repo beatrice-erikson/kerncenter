@@ -1,3 +1,11 @@
+<% for sensor in @sensors %>
+	<%= sensor.subtype.name %>: 
+	<% for measurement in sensor.measurements %>
+		<%= measurement.amount %>, 
+	<%  end %>
+	<br />
+<% end %>
+
 <h1>Resource#show</h1>
 <%= @resource.capitalize %>
 <%= line_chart(*@resource_vars) %>
