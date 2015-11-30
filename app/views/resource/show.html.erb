@@ -1,10 +1,12 @@
 <% for sensor in @sensors %>
 	<%= sensor.subtype.name %>: 
 	<% for measurement in sensor.measurements %>
-		<%= measurement.amount %>, 
+		<%= measurement.amount %>,
 	<%  end %>
 	<br />
 <% end %>
+
+<%= @sensors.first.measurements.where("time > ?", DateTime.yesterday).map {|m| m.amount} %>
 
 <h1>Resource#show</h1>
 <%= @resource.capitalize %>

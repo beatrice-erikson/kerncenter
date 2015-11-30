@@ -22,6 +22,9 @@ rlist.each do |rname, sublist|
 		for i in 0..2
 			sensor = Sensor.create(subtype_id: subtype.id, room_id: room.id)
 			for i in 0..10
+				Measurement.create(sensor_id: sensor.id, time: DateTime.yesterday, amount: prng.rand(50.00) - 25.00)
+			end
+			for i in 0..10
 				Measurement.create(sensor_id: sensor.id, time: DateTime.now, amount: prng.rand(50.00) - 25.00)
 			end
 		end
