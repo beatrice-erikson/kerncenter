@@ -5,8 +5,15 @@
 	<%  end %>
 	<br />
 <% end %>
+<%= params[:start] %>
+<%= select_tag 'time',
+	options_for_select([
+		["Today", DateTime.now.to_date.to_s + "/" + DateTime.now.to_s],
+		["Last week", 7.days.ago.to_s + "/" + DateTime.now.to_s]]),
+	:onchange => "window.location.replace('/resource/#{@resource}/'+this.value);",
+	:prompt => "Select date range" %>
 
-<%= @sensors.first.measurements.where("time > ?", DateTime.yesterday).map {|m| m.amount} %>
+<%= @sensors.first.amounts(DateTime.yesterday, DateTime.now) %>
 
 <h1>Resource#show</h1>
 <%= @resource.capitalize %>
