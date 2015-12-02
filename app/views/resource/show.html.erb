@@ -15,11 +15,8 @@
 
 <%= @sensors.first.amounts(DateTime.yesterday, DateTime.now) %>
 
-<h1>Resource#show</h1>
+<h2>Today's Usage</h2>
 <%= @resource.capitalize %>
-<%= line_chart(*@resource_vars) %>
+<%= improved_line_chart(*@resource_vars) %>
 
 <br />
-
-<!== clickable chart==>
-<%= bar_chart(*@resource_vars) %>
