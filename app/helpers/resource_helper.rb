@@ -1,36 +1,30 @@
 module ResourceHelper
-	def line_chart(resource, resource_usage, resource_generation, hours)
-		chart = LazyHighCharts::HighChart.new("graph") do |g|
+	def line_chart(resource, subtypes, resource_usage, resource_generation, hours)
+		@chart = LazyHighCharts::HighChart.new("graph") do |g|
 			g.title(text: resource.capitalize + " Over Time")
 			g.xAxis(categories: hours)
 			g.series(name: resource.capitalize + " Usage", data: resource_usage)
 			g.series(name: resource.capitalize + " Generation", data: resource_generation)
 		end
-		high_chart(resource + "_chart", chart)
+		high_chart(resource + "_chart", @chart)
 	end
-	def bar_chart(resource, resource_usage, resource_generation, hours)
-		@graph = LazyHighCharts::HighChart.new('column') do |b|
-			b.series(:name => resource.capitalize  + " Usage", :data=> resource_usage)
-			b.series(:name => resource.capitalize + " Generation",:data=> resource_generation)       
-			b.title({ :text => resource.capitalize + " Over Time"})
-			b.legend({:align => 'left', 
-				:x => -100, 
-				:verticalAlign => 'top',
-				:y => 20,
-				:floating => "false",
-				:backgroundColor => '#DDDDDD',
-				:borderColor => '#BBB',
-				:borderWidth => 0.25,
-				:shadow => "false"})
-			b.options[:chart][:defaultSeriesType] = "column"
-			b.options[:xAxis] = {:plot_bands => "none", :title => {:text => "Time"}, :categories => hours}
-			b.options[:yAxis][:title] = {:text => "Consumption"}
-			b.plotOptions(series:{
-				:cursor => 'pointer', 
-				:point => {:events => {:click => "click_function"}}})
-		end
-		high_chart(resource + "_graph", @graph) do |w|
-			raw "options.plotOptions.series.point.events.click = function() { location.href = 'http://duckduckgo.com'}"
-		end
+  
+  #this will be a cumulative graph plotting a variable series
+  def improved_line_chart(resource, subtypes, resource_usage, resource_generation, hours)
+    @chart = LazyHighCharts::HighChart.new("graph") do |p|
+      p.title(text: resource.capitalize + " Over Time")
+      p.xAxis(categories: hours)
+      subtypes.each do |type|
+        p.series(name: type.name, data: resource_usage)
+      end
+      #p.series(series)
+      p.legend(:layout => 'horizontal', :style => {
+        :left => 'auto',
+        :bottom => 'auto',
+        :right => '50px',
+        :top => '100px'
+      })
     end
+  		high_chart(resource + "_chart", @chart)
+  end
 end
