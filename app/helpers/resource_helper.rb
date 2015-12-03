@@ -25,6 +25,32 @@ module ResourceHelper
         :top => '100px'
       })
     end
-  		high_chart(resource + "_chart", @chart)
+    high_chart(resource + "_chart", @chart)
+  end
+  
+  #this will be a pie chart giving an overview of usage from the nearest midnight to current time
+  def pie_chart(resource, subtypes, resource_usage, resource_generation, hours)
+  	@chart = LazyHighCharts::HighChart.new("pie") do |f|
+      f.title(text: "Today's " + resource.capitalize + " Usage")
+      subtypes.each do |type|
+        f.series({
+          colorByPoint: true,
+          type: "pie",
+          data: [{
+            name: type.name,
+            y: resource_usage,
+            sliced: true,
+            selected: true}]})
+      end
+      f.plot_options(:pie =>{
+        :allowPointSelect => true, 
+        :cursor => "pointer", 
+        :dataLabels =>{
+          :enabled => true,
+          :color => "black",
+          :format => '<b>{point.name}</b>: {point.percentage:.} %'
+        }
+      })
+    end
   end
 end
