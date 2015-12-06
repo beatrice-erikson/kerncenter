@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151120230330) do
+ActiveRecord::Schema.define(version: 20151202211351) do
 
   create_table "measurements", force: :cascade do |t|
     t.integer  "sensor_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20151120230330) do
   create_table "subtypes", force: :cascade do |t|
     t.integer "type_id"
     t.string  "name"
+    t.boolean "usage?"
   end
 
   add_index "subtypes", ["type_id"], name: "index_subtypes_on_type_id"

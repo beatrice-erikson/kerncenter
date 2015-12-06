@@ -1,18 +1,17 @@
-<% for sensor in @sensors %>
-	<%= sensor.subtype.name %>: 
-	<% for measurement in sensor.measurements %>
-		<%= measurement.amount %>,
-	<%  end %>
-	<br />
-<% end %>
-<%= params[:start] %>
+<br />
+<%= @usage_types %>
+<br />
+<br />
+<%= @usage %>
+<br />
 <%= select_tag 'time',
 	options_for_select([
 		["Today", DateTime.now.to_date.to_s + "/" + DateTime.now.to_s],
 		["Last week", 7.days.ago.to_s + "/" + DateTime.now.to_s]]),
-	:onchange => "window.location.replace('/resource/#{@resource}/'+this.value);",
+	:onchange => "window.location.replace('/resource/#{@resource.resource}/'+this.value);",
 	:prompt => "Select date range" %>
 
+<<<<<<< Updated upstream
 <%= @sensors.first.amounts(DateTime.yesterday, DateTime.now) %>
 
 <h2>Today's Usage</h2>
@@ -20,3 +19,13 @@
 <%= improved_line_chart(*@resource_vars) %>
 
 <br />
+=======
+<h1>Resource#show</h1>
+<%= @resource.resource.capitalize %>
+line_chart(*@resource_vars)
+
+<br />
+
+<!== clickable chart==>
+bar_chart(*@resource_vars)
+>>>>>>> Stashed changes

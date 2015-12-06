@@ -11,21 +11,33 @@ prng = Random.new
 
 rlist = [
 	['water',
-		['hot', 'cold', 'hydrant', 'east', 'west']],
+		['hot', 'cold', 'hydrant'],
+		['collection']],
 	['electricity',
-		['plug', 'lights', 'mechanical']]]
+		['plug', 'lights', 'mechanical'],
+		['solar']]]
 
-rlist.each do |rname, sublist|
+rlist.each do |rname, subuselist, subgenlist|
 	resource = Type.create(resource: rname)
-	sublist.each do |subname|
-		subtype = Subtype.create(type_id: resource.id, name: subname)
-		for i in 0..2
+	subuselist.each do |subname|
+		subtype = Subtype.create(type_id: resource.id, name: subname, usage?: true)
+		for i in 0..1
 			sensor = Sensor.create(subtype_id: subtype.id, room_id: room.id)
-			for i in 0..10
-				Measurement.create(sensor_id: sensor.id, time: DateTime.yesterday, amount: prng.rand(50.00) - 25.00)
+			for d in 0..10
+				for x in 0..2
+					Measurement.create(sensor_id: sensor.id, time: d.days.ago, amount: prng.rand(50.00))
+				end
 			end
-			for i in 0..10
-				Measurement.create(sensor_id: sensor.id, time: DateTime.now, amount: prng.rand(50.00) - 25.00)
+		end
+	end
+	subgenlist.each do |subname|
+		subtype = Subtype.create(type_id: resource.id, name: subname, usage?: false)
+		for i in 0..1
+			sensor = Sensor.create(subtype_id: subtype.id, room_id: room.id)
+			for d in 0..10
+				for x in 0..2
+					Measurement.create(sensor_id: sensor.id, time: d.days.ago, amount: prng.rand(50.00))
+				end
 			end
 		end
 	end
