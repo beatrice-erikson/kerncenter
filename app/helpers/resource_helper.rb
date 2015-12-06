@@ -9,7 +9,7 @@ module ResourceHelper
 		high_chart(resource + "_chart", @chart)
 	end
   
-  #this will be a cumulative graph plotting a variable series
+  #this will be a cumulative graph plotting a variable number of series
   def improved_line_chart(resource, subtypes, resource_usage, resource_generation, hours)
     @chart = LazyHighCharts::HighChart.new("graph") do |p|
       p.title(text: resource.capitalize + " Over Time")
@@ -30,27 +30,26 @@ module ResourceHelper
   
   #this will be a pie chart giving an overview of usage from the nearest midnight to current time
   def pie_chart(resource, subtypes, resource_usage, resource_generation, hours)
-  	@chart = LazyHighCharts::HighChart.new("pie") do |f|
+		@chart = LazyHighCharts::HighChart.new("pie") do |f|
+      f.chart({
+        :type => "pie",
+        :margin => [30, 5, 5, 5]
+      })
       f.title(text: "Today's " + resource.capitalize + " Usage")
+      f.legend(:layout => 'horizontal')
       subtypes.each do |type|
-        f.series({
-          colorByPoint: true,
-          type: "pie",
-          data: [{
-            name: type.name,
-            y: resource_usage,
-            sliced: true,
-            selected: true}]})
+        f.series(name: type.name, data: resource_usage, innerSize: 200)
       end
       f.plot_options(:pie =>{
         :allowPointSelect => true, 
         :cursor => "pointer", 
         :dataLabels =>{
-          :enabled => true,
+          :enabled => false,
           :color => "black",
-          :format => '<b>{point.name}</b>: {point.percentage:.} %'
+          #:format => '<b>{point.name}</b>: {point.percentage:.} %'
         }
       })
     end
+    high_chart("today_" + resource + "_chart", @chart)
   end
 end

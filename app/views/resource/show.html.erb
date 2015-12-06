@@ -11,15 +11,6 @@
 	:onchange => "window.location.replace('/resource/#{@resource.resource}/'+this.value);",
 	:prompt => "Select date range" %>
 
-<<<<<<< Updated upstream
-<%= @sensors.first.amounts(DateTime.yesterday, DateTime.now) %>
-
-<h2>Today's Usage</h2>
-<%= @resource.capitalize %>
-<%= improved_line_chart(*@resource_vars) %>
-
-<br />
-=======
 <h1>Resource#show</h1>
 <%= @resource.resource.capitalize %>
 line_chart(*@resource_vars)
@@ -28,4 +19,3 @@ line_chart(*@resource_vars)
 
 <!== clickable chart==>
 bar_chart(*@resource_vars)
->>>>>>> Stashed changes
