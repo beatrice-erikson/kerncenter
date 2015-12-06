@@ -1,8 +1,12 @@
 <br />
-<%= @usage_types %>
+<%= @usage_time_values %>
+<br />
+<%for name in @hour_names %>
+<%= name %><br />
+<% end %>
 <br />
 <br />
-<%= @usage %>
+<%= @resource_vars %>
 <br />
 <%= select_tag 'time',
 	options_for_select([
@@ -13,7 +17,7 @@
 
 <h1>Resource#show</h1>
 <%= @resource.resource.capitalize %>
-line_chart(*@resource_vars)
+<%= improved_line_chart(*@resource_vars) %>
 
 <br />
 
