@@ -59,14 +59,12 @@
 
 	<div class="skills">
     	<ul>
-    		 <li class="SolarGeneration"><span><%= link_to "Solar Generation", resource_path('electricity') %> </span>
-
-    		 </li>
-    		 <li class="ProgramUse" ><span>Program Use</span></li>
-    		 <li class="SystemUSe"><span>System Use</span></li>
-       		 <li class="WaterUse"><span>Water Use</span></li>
-       		 <li class="WaterProcess"><span>Water Process</span></li>
-       		 <li class="CampusIntensity"><span>Campus Intensity</span></li>
+    		 <li class="SolarGeneration"><span><%= link_to "Solar Generation", resource_path('electricity') %> </span></li>
+    		 <li class="ProgramUse" ><span><%= link_to "Program Use", resource_path('electricity') %></span></li>
+    		 <li class="SystemUSe"><span><%= link_to "System USe", resource_path('electricity') %></span></li>
+       		 <li class="WaterUse"><span><%= link_to "Water Use", resource_path('electricity') %></span></li>
+       		 <li class="WaterProcess"><span><%= link_to "Water Process", resource_path('electricity') %></span></li>
+       		 <li class="CampusIntensity"><span><%= link_to "Campus Intensity", resource_path('electricity') %></span></li>
     	</ul>
     	<!-- <div class="canvas">
        		 <canvas id="canvas-html-bottom" class="bottom"></canvas>
