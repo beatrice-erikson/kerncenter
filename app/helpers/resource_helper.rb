@@ -24,6 +24,10 @@ module ResourceHelper
         :right => '50px',
         :top => '100px'
       })
+      p.chart({
+        :type => "area",
+        :margin => [30, 5, 5, 5]
+      })
     end
     high_chart(resource + "_chart", @chart)
   end
