@@ -9,7 +9,7 @@ class ResourceController < ApplicationController
 	@usage = @usage_types.map {|u| u.sensors.map {|s| s.amounts(params[:start], params[:stop]).sum}.sum}
 	@gen = @gen_types.map {|g| g.sensors.map {|s| s.amounts(params[:start], params[:stop]).sum}.sum}
 	@hours = granularity(DateTime.parse(params[:start]), DateTime.parse(params[:stop]))
-	@hour_names = @hours.map { |h| h[0] }
+	@hour_names = @hours.map { |h| h[0].to_date }
 	@usage_time_values = Array.new
 	@gen_time_values = Array.new
 	for timepair in @hours
