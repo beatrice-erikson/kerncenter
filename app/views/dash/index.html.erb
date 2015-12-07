@@ -62,9 +62,10 @@
     		 <li class="SolarGeneration"><span>Solar Generation</span></li>
     		 <li class="ProgramUse"><span>Program Use</span></li>
     		 <li class="SystemUSe"><span>System Use</span></li>
-       		 <li class="WaterUse"><span>Water Use</span></li>
+       		 <li <%= link_to "Water", resource_path('water') %> class="WaterUse"><span>Water Use</span></li> <!--  to link water  -->
        		 <li class="WaterProcess"><span>Water Process</span></li>
-       		 <li class="CampusIntensity"><span>Campus Intensity</span></li>
+       		 <li class="CampusIntensity"><span>Campus Intensity</span></li>  
+       		 
     	</ul>
     	<!-- <div class="canvas">
        		 <canvas id="canvas-html-bottom" class="bottom"></canvas>
