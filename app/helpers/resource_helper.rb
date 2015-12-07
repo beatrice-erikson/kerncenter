@@ -10,13 +10,14 @@ module ResourceHelper
 	end
   
   #this will be a cumulative graph plotting a variable number of series
-  def improved_line_chart(resource, usage, generation, hours)
+  def improved_line_chart(resource, usage, generation, use_totals, gen_totals, hours)
     @chart = LazyHighCharts::HighChart.new("graph") do |p|
       p.title(text: resource.capitalize + " Over Time")
       p.xAxis(categories: hours)
       usage.each {|type, values| p.series(name: type, data: values)}
 	  generation.each {|type, values| p.series(name: type, data: values)}
-      #p.series(series)
+      p.series(name: "Cumulative Usage", data: use_totals)
+	  p.series(name: "Cumulative Generation", data: gen_totals)
       p.legend(:layout => 'horizontal', :style => {
         :left => 'auto',
         :bottom => 'auto',

@@ -36,7 +36,7 @@ rlist.each do |rname, subuselist, subgenlist|
 			sensor = Sensor.create(subtype_id: subtype.id, room_id: room.id)
 			for h in 0..100
 				for x in 0..2
-					Measurement.create(sensor_id: sensor.id, time: (h*3).hours.ago, amount: prng.rand(50.00))
+					Measurement.create(sensor_id: sensor.id, time: (h*3).hours.ago, amount: prng.rand(150.00))
 				end
 			end
 		end

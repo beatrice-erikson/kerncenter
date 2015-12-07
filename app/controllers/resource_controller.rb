@@ -17,11 +17,13 @@ class ResourceController < ApplicationController
 		@gen_time_values << @gen_types.map {|g| g.sensors.map {|s| s.amounts(timepair[0], timepair[1]).sum}.sum}
 	end
 	@usage_time_values = @usage_time_values.transpose
+	@usage_cuml = @usage_time_values.transpose.map {|x| x.reduce(:+)}
 	@usage_time_values = @usage_type_names.zip(@usage_time_values)
 	@usage_time_values = Hash[@usage_time_values.map {|key, value| [key, value]}]
 	@gen_time_values = @gen_time_values.transpose
+	@gen_cuml = @gen_time_values.transpose.map {|x| x.reduce(:+)}
 	@gen_time_values = @gen_type_names.zip(@gen_time_values)
 	@gen_time_values = Hash[@gen_time_values.map {|key, value| [key, value]}]
-	@resource_vars = [@resource.resource, @usage_time_values, @gen_time_values, @hour_names]
+	@resource_vars = [@resource.resource, @usage_time_values, @gen_time_values, @usage_cuml, @gen_cuml, @hour_names]
   end
 end
