@@ -32,6 +32,58 @@ module ResourceHelper
     high_chart(resource + "_chart", @chart)
   end
   
+
+  # this will be a cumulative graph reflecting the entire progress of the building energy consumption, generation, and the net result of the former two
+  def overview_chart(resource, usage, generation, use_totals, gen_totals, hours)
+    @chart = LazyHighCharts::HighChart.new("spline") do |i|
+      i.chart({
+        :type => 'areaspline',
+        :margin => [30, 5, 5, 30],
+        :zoomType => 'x'
+      })
+      i.legend(:layout => 'horizontal', :style => {
+        :left => 'auto',
+        :bottom => 'auto',
+        :right => '50px',
+        :top => '100px'
+      })
+      i.plotOptions({spline:{marker:{enabled: true}}})
+			i.series(name: "Cummulative Consumption: " + resource, data: use_totals)
+			i.series(name: "Cummulative Generation: " + resource, data: gen_totals)
+      i.series(name: "Net " + resource, data: gen_totals - use_totals)
+      i.subtitle(text: "Select plot area to zoom in.")
+      i.title(text: "Living Building Progress")
+      i.xAxis({
+        dateTimeLabelFormats: {
+          month: '%e. %b',
+          year: '%b'
+        },
+        type: 'datetime',
+        title: {
+          text: "Date"
+        }
+      })
+      i.yAxis({
+        plotOptions: {
+          spline: {
+            marker: {
+              enabled: true
+            }
+          }
+        },
+        title: {
+          text: "Energy Units (  )"
+        },
+        tooltip: {
+          headerFormat: '{series.name}<br>',
+          pointFormat: '{point.x.:%e. %b}: {point.y:.2f} m'
+        }
+      })
+        
+    end
+    high_chart("irregular_intervals_zoomable" + resource + "_chart", @chart)
+  end
+  
   #this will be a pie chart giving an overview of usage from the nearest midnight to current time
   def pie_chart(resource, subtypes, resource_usage, resource_generation, hours)
 		@chart = LazyHighCharts::HighChart.new("pie") do |f|
