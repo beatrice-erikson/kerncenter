@@ -41,32 +41,39 @@
 </nav>
 
 <div class = "header">
-	<div class = "row">
-		<%= image_tag("HampshireLogo.png", :alt => "HampshireLogo", :size => '200x100') %>
-		<t1> RW Kern Center</t1>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="KernCenter" style=" text-align:center; padding:20px; ">
+				<%= image_tag("HampshireLogo.png", :alt => "HampshireLogo", :size => '150x75') %>
+				<t1> RW Kern Center</t1>
+			</div>	
+		</div>
 	</div>
 </div>
 
 
+
+
 <div class="menu">
-	<div class="row">
-		<div class="col-md-2">
-			<div class="solar_generation">
-				<div class="skills">
-    				<ul>
-       					 <li class="water"><span>Water</span></li>
-       					 <li class="solar"><span>Water</span></li>
-    				</ul>
-    				<div class="canvas">
-       					 <canvas id="canvas-html-bottom" class="bottom"></canvas>
-  					</div>  
-				</div>
-				<%= link_to(image_tag('yellow_hide.png'), resource_path('electricity') )%>
-			</div>
-		</div>
+
+
+	<div class="skills">
+    	<ul>
+    		 <li class="SolarGeneration"><span>Solar Generation</span></li>
+    		 <li class="ProgramUse"><span>Program Use</span></li>
+    		 <li class="SystemUSe"><span>System Use</span></li>
+       		 <li class="WaterUse"><span>Water Use</span></li>
+       		 <li class="WaterProcess"><span>Water Process</span></li>
+       		 <li class="CampusIntensity"><span>Campus Intensity</span></li>
+    	</ul>
+    	<!-- <div class="canvas">
+       		 <canvas id="canvas-html-bottom" class="bottom"></canvas>
+  		</div>  --> 
+
+
+		<%= link_to 'electricity', resource_path('electricity') %>
 		
-		
-		<div class="col-md-2">
+		<!-- <div class="col-md-2">
 			<div class="solar_generation">
 				<%= link_to(image_tag('purple_hide.png'), resource_path('electricity')) %>
 			</div>
@@ -97,10 +104,10 @@
 				<h2>Generated Today</h2>
 				<h2>10 kWh</h2>
 			</div>
-		</div>
+		</div> -->
 	</div>
 
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-md-12">
 			<div class="first_graph" style=" border:solid black 2px; text-align:center; padding:20px;">
 				<h2>Cummulative Annual kWh (July-July) </h2>
@@ -118,15 +125,15 @@
 		<div class="col-md-6">
 			<h2>+ Zero Net Energy Goal </h2>
 		</div>
-	</div>
+	</div> -->
 
 </div>
 
 
 
-
+<!-- 
 <h1>Dash#index</h1>
-<p>Find me in app/views/dash/index.html.erb</p>
+<p>Find me in app/views/dash/index.html.erb</p> -->
 
 
 </body>
