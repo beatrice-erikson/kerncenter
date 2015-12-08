@@ -22,3 +22,7 @@
 .idea/encodings.xml
 .idea/kerncenter.iml
 .idea/modules.xml
+.idea/runConfigurations/Development__kerncenter.xml
+.idea/runConfigurations/spec__kerncenter.xml
+.idea/runConfigurations/Production__kerncenter.xml
+.idea/runConfigurations/test__kerncenter.xml
