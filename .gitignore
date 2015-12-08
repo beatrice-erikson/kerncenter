@@ -26,3 +26,8 @@
 .idea/runConfigurations/spec__kerncenter.xml
 .idea/runConfigurations/Production__kerncenter.xml
 .idea/runConfigurations/test__kerncenter.xml
+.idea/dataSources.ids
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+Gemfile.lock
+Gemfile.lock

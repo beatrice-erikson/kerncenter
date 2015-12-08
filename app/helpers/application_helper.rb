@@ -3,12 +3,32 @@ module ApplicationHelper
   require 'active_support'
   require 'active_support/core_ext/date_time'
   def granularity(startTime, stopTime)
-		grain = (stopTime - startTime) / 5
+    raise "Start time must be before end time" if startTime >= stopTime
+    interval = 7
+    if (stopTime - startTime) >= 30
+      interval = 30
+    end
+    if (stopTime - startTime) >= 365
+      interval = 12
+    end
+    remainder = (stopTime - startTime) % interval
+    firstTime = remainder / 2
+    lastTime = remainder - firstTime
+    puts(remainder, firstTime, lastTime)
+		grain = (stopTime - startTime - lastTime) / interval
 		times = []
-		while stopTime > startTime do
-			times.push([startTime.beginning_of_day(), startTime.end_of_day()])
+    if firstTime > 0
+      times.push(startTime.beginning_of_day, startTime.end_of_day)
+    end
+    startTime += firstTime
+		while startTime < (stopTime - lastTime) do
+			times.push([startTime.beginning_of_day, startTime.end_of_day])
 			startTime += grain
-		end
-		return times
+    end
+    if (lastTime > 0)
+      times.push(stopTime.beginning_of_day, stopTime.end_of_day)
+    end
+    times
   end
 end
+
