@@ -8,7 +8,7 @@
     if (stopTime - startTime) >= 30
       interval = 30
     end
-    if (stopTime - startTime) >= 365
+    if (stopTime - startTime) >= 364
       interval = 12
     end
     remainder = (stopTime - startTime) % interval
