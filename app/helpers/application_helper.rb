@@ -1,4 +1,4 @@
-module ApplicationHelper
+#module ApplicationHelper
 	require 'date'
   require 'active_support'
   require 'active_support/core_ext/date_time'
@@ -14,11 +14,10 @@ module ApplicationHelper
     remainder = (stopTime - startTime) % interval
     firstTime = remainder / 2
     lastTime = remainder - firstTime
-    puts(remainder, firstTime, lastTime)
 		grain = (stopTime - startTime - lastTime) / interval
 		times = []
     if firstTime > 0
-      times.push(startTime.beginning_of_day, startTime.end_of_day)
+      times.push([startTime.beginning_of_day, startTime.end_of_day])
     end
     startTime += firstTime
 		while startTime < (stopTime - lastTime) do
@@ -26,9 +25,9 @@ module ApplicationHelper
 			startTime += grain
     end
     if (lastTime > 0)
-      times.push(stopTime.beginning_of_day, stopTime.end_of_day)
+      times.push([stopTime.beginning_of_day, stopTime.end_of_day])
     end
     times
   end
-end
+#end
 
