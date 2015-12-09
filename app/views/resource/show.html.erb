@@ -1,5 +1,5 @@
 <br />
-<%= @usage_cuml %>
+<%= @usage_time_values.map {|t, v| [t, v.sum]} %>
 <br />
 <%for name in @hour_names %>
 <%= name %><br />
@@ -20,5 +20,7 @@
 <%= improved_line_chart(*@resource_vars) %>
 
 <br />
-<h2>The Building at a Glimpse</h2>
+<h2>The Building at a Glance</h2>
 <%= overview_chart(*@resource_vars) %>
+
+<%= pie_chart(*@resource_vars) %>

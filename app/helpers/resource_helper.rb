@@ -24,10 +24,6 @@ module ResourceHelper
         :right => '50px',
         :top => '100px'
       })
-      p.chart({
-        :type => "area",
-        :margin => [30, 5, 5, 5]
-      })
     end
     high_chart(resource + "_chart", @chart)
   end
@@ -48,8 +44,8 @@ module ResourceHelper
         :top => '100px'
       })
       i.plotOptions({spline:{marker:{enabled: true}}})
-			i.series(name: "Cummulative Consumption: " + resource, data: use_totals)
-			i.series(name: "Cummulative Generation: " + resource, data: gen_totals)
+			i.series(name: "Cumulative Consumption: " + resource, data: use_totals)
+			i.series(name: "Cumulative Generation: " + resource, data: gen_totals)
       i.series(name: "Net " + resource, data: gen_totals - use_totals)
       i.subtitle(text: "Select plot area to zoom in.")
       i.title(text: "Living Building Progress")
@@ -85,7 +81,7 @@ module ResourceHelper
   end
   
   #this will be a pie chart giving an overview of usage from the nearest midnight to current time
-  def pie_chart(resource, subtypes, resource_usage, resource_generation, hours)
+  def pie_chart(resource, usage, generation, use_totals, gen_totals, hours)
 		@chart = LazyHighCharts::HighChart.new("pie") do |f|
       f.chart({
         :type => "pie",
@@ -93,14 +89,18 @@ module ResourceHelper
       })
       f.title(text: "Today's " + resource.capitalize + " Usage")
       f.legend(:layout => 'horizontal')
-      subtypes.each do |type|
-        f.series(name: type.name, data: resource_usage, innerSize: 200)
-      end
+	  usedata = usage.map {|t, v| [t, v.sum]}
+	  series = {
+				:type=> 'pie',
+				:name=> resource.capitalize + ' Chart',
+				:data=> usedata,
+				:innerSize=> 200}
+	  f.series(series)
       f.plot_options(:pie =>{
         :allowPointSelect => true, 
         :cursor => "pointer", 
         :dataLabels =>{
-          :enabled => false,
+          :enabled => true,
           :color => "black",
           #:format => '<b>{point.name}</b>: {point.percentage:.} %'
         }
