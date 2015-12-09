@@ -17,7 +17,7 @@
 	    .circle span {
 	    	display: block;
 	    	text-align: center;
-			margin: 30px 5px;
+			margin: 50px 5px;
 			transition: inherit;
 	    }
 	    .circle:hover { width: 130px; height: 130px; margin: 0; }
@@ -44,8 +44,8 @@
 
 ​
 <div style="text-align:center;">
-	<%= link_to content_tag(:span,'Solar'), 'menus#index', class: 'circle orange' %>
-	<%= link_to content_tag(:span,'Water'), 'menus#index', class: 'circle blue' %>
+	<%= link_to content_tag(:span,'Solar'), resource_path('electricity'), class: 'circle orange' %>
+	<%= link_to content_tag(:span,'Water'), resource_path('water'), class: 'circle blue' %>
 	<%= link_to content_tag(:span,'Learn More'), 'menus#index', class: 'circle red' %>
 	<%= link_to content_tag(:span,'Consumption'), 'menus#index', class: 'circle green' %>
 
