@@ -1,40 +1,37 @@
-<html>
-<head></head>
-<body>
-	<style>
-		.circle {
-			display: inline-block;
-			width: 120px; height: 120px;
-			border: 15px solid;
-	   		border-radius: 100px;
-	   		text-decoration: none;
-	   		color: black;
-	   		background-color: white;
-	   		transition: 0.3s;
-	   		margin: 5px;
-	   		box-shadow: -2px 2px 1px rgba(0,0,0,0.5);
-	    }
-	    .circle span {
-	    	display: block;
-	    	text-align: center;
-			margin: 50px 5px;
-			transition: inherit;
-	    }
-	    .circle:hover { width: 130px; height: 130px; margin: 0; }
-		.circle:hover span { margin: 45px 5px; }
+<style>
+	.circle {
+		display: inline-block;
+		width: 120px; height: 120px;
+		border: 15px solid;
+		border-radius: 100px;
+		text-decoration: none;
+		color: black;
+		background-color: white;
+		transition: 0.3s;
+		margin: 5px;
+		box-shadow: -2px 2px 1px rgba(0,0,0,0.5);
+	}
+	.circle span {
+		display: block;
+		text-align: center;
+		margin: 50px 5px;
+		transition: inherit;
+	}
+	.circle:hover { width: 130px; height: 130px; margin: 0; }
+	.circle:hover span { margin: 45px 5px; }
 ​
-		/* unique color classes */
-	    .blue { border-color: blue; }
-	    .green { border-color: green; }
-	    .red { border-color: red; }
-	    .orange { border-color: orange; }
-    </style>
+	/* unique color classes */
+	.blue { border-color: rgb(0,0,255); }
+	.green { border-color: green; }
+	.red { border-color: red; }
+	.orange { border-color: orange; }
+</style>
 
 
  <div class = "header">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="KernCenter" style=" text-align:center; padding:20px; ">
+			<div class="KernCenter" style=" text-align:center; padding-top:20px; ">
 				<%= image_tag("HampshireLogo.png", :alt => "HampshireLogo", :size => '150x75') %>
 				<t1> RW Kern Center</t1>
 			</div>	
@@ -43,13 +40,9 @@
 </div>
 
 ​
-<div style="text-align:center;">
+<div style="text-align:center;padding-bottom:20px">
 	<%= link_to content_tag(:span,'Solar'), resource_path('electricity'), class: 'circle orange' %>
-	<%= link_to content_tag(:span,'Water'), resource_path('water'), class: 'circle blue' %>
+	<%= link_to content_tag(:span,'Water'), resource_path('water'), class: 'circle blue', style:"border-color:rgb(0,0,255)" %>
 	<%= link_to content_tag(:span,'Learn More'), 'menus#index', class: 'circle red' %>
 	<%= link_to content_tag(:span,'Consumption'), 'menus#index', class: 'circle green' %>
-
-	
 </div>
-</body>
-</html>

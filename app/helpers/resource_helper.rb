@@ -11,13 +11,14 @@ module ResourceHelper
   
   #this will be a cumulative graph plotting a variable number of series
   def improved_line_chart(resource, usage, generation, use_totals, gen_totals, hours)
-    @chart = LazyHighCharts::HighChart.new("graph") do |p|
+    @chart = LazyHighCharts::HighChart.new("spline") do |p|
       p.title(text: resource.capitalize + " Over Time")
       p.xAxis(categories: hours)
-      usage.each {|type, values| p.series(name: type, data: values)}
-	  generation.each {|type, values| p.series(name: type, data: values)}
-      p.series(name: "Cumulative Usage", data: use_totals)
-	  p.series(name: "Cumulative Generation", data: gen_totals)
+	  p.plotOptions({:spline => {:marker => {:enabled => false}}})
+      usage.each {|type, values| p.series(type: 'spline', name: type.capitalize, data: values)}
+	  generation.each {|type, values| p.series(type: 'spline', name: type.capitalize, data: values)}
+      p.series(type: 'spline', name: "Cumulative Usage", data: use_totals)
+	  p.series(type: 'spline', name: "Cumulative Generation", data: gen_totals)
       p.legend(:layout => 'horizontal', :style => {
         :left => 'auto',
         :bottom => 'auto',
@@ -87,9 +88,9 @@ module ResourceHelper
         :type => "pie",
         :margin => [30, 5, 5, 5]
       })
-      f.title(text: "Today's " + resource.capitalize + " Usage")
+      f.title(text: "Relative " + resource.capitalize + " Usage")
       f.legend(:layout => 'horizontal')
-	  usedata = usage.map {|t, v| [t, v.sum]}
+	  usedata = usage.map {|t, v| [t.capitalize, v.sum]}
 	  series = {
 				:type=> 'pie',
 				:name=> resource.capitalize + ' Chart',
@@ -102,7 +103,7 @@ module ResourceHelper
         :dataLabels =>{
           :enabled => true,
           :color => "black",
-          #:format => '<b>{point.name}</b>: {point.percentage:.} %'
+          :format => '<b>{point.name}</b>: {point.percentage:.1f} %'
         }
       })
     end

@@ -6,7 +6,7 @@ module ApplicationHelper
     raise "Start time must be before end time" if startTime >= stopTime
     interval = 7
     if (stopTime - startTime) >= 30
-      interval = 30
+      interval = 10
     end
     if (stopTime - startTime) >= 364
       interval = 12
