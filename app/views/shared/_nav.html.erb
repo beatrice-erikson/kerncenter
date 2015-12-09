@@ -4,7 +4,7 @@
 	<style>
 		.circle {
 			display: inline-block;
-			width: 100px; height: 100px;
+			width: 120px; height: 120px;
 			border: 15px solid;
 	   		border-radius: 100px;
 	   		text-decoration: none;
@@ -17,10 +17,10 @@
 	    .circle span {
 	    	display: block;
 	    	text-align: center;
-			margin: 40px 5px;
+			margin: 30px 5px;
 			transition: inherit;
 	    }
-	    .circle:hover { width: 110px; height: 110px; margin: 0; }
+	    .circle:hover { width: 130px; height: 130px; margin: 0; }
 		.circle:hover span { margin: 45px 5px; }
 ​
 		/* unique color classes */
@@ -29,12 +29,26 @@
 	    .red { border-color: red; }
 	    .orange { border-color: orange; }
     </style>
+
+
+ <div class = "header">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="KernCenter" style=" text-align:center; padding:20px; ">
+				<%= image_tag("HampshireLogo.png", :alt => "HampshireLogo", :size => '150x75') %>
+				<t1> RW Kern Center</t1>
+			</div>	
+		</div>
+	</div>
+</div>
+
 ​
 <div style="text-align:center;">
-	<a href="#blue" class="circle blue"> <span>Water</span> </a>
+	<a  href="#blue" class="circle blue"> <span>Water</span> </a>
 	<a href="#green" class="circle green"><span>Solar</span></a>
 	<a href="#red" class="circle red"><span>Genneration</span></a>
 	<a href="#orange" class="circle orange"><span>Consumption</span></a>
+	
 </div>
 </body>
 </html>

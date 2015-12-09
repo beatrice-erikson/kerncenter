@@ -1,4 +1,4 @@
-#module ApplicationHelper
+module ApplicationHelper
 	require 'date'
   require 'active_support'
   require 'active_support/core_ext/date_time'
@@ -29,5 +29,5 @@
     end
     times
   end
-#end
+end
 
