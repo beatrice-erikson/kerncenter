@@ -44,10 +44,11 @@
 
 ​
 <div style="text-align:center;">
-	<a  href="#blue" class="circle blue"> <span>Water</span> </a>
-	<a href="#green" class="circle green"><span>Solar</span></a>
-	<a href="#red" class="circle red"><span>Genneration</span></a>
-	<a href="#orange" class="circle orange"><span>Consumption</span></a>
+	<%= link_to content_tag(:span,'Solar'), 'menus#index', class: 'circle orange' %>
+	<%= link_to content_tag(:span,'Water'), 'menus#index', class: 'circle blue' %>
+	<%= link_to content_tag(:span,'Learn More'), 'menus#index', class: 'circle red' %>
+	<%= link_to content_tag(:span,'Consumption'), 'menus#index', class: 'circle green' %>
+
 	
 </div>
 </body>
