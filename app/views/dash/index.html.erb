@@ -18,6 +18,38 @@
   <title>Kern Center</title>
 
 </head>
+
+<style>
+		.circle {
+			display: inline-block;
+			width: 100px; height: 100px;
+			border: 15px solid;
+	   		border-radius: 100px;
+	   		text-decoration: none;
+	   		color: black;
+	   		background-color: white;
+	   		transition: 0.3s;
+	   		margin: 5px;
+	   		box-shadow: -2px 2px 1px rgba(0,0,0,0.5);
+	    }
+	    .circle span {
+	    	display: block;
+	    	text-align: center;
+			margin: 40px 5px;
+			transition: inherit;
+	    }
+	    .circle:hover { width: 110px; height: 110px; margin: 0; }
+		.circle:hover span { margin: 45px 5px; }
+​
+		/* unique color classes */
+	    .blue { border-color: blue; }
+	    .green { border-color: green; }
+	    .red { border-color: red; }
+	    .orange { border-color: orange; }
+    </style>
+
+
+
 <body>
 
  
@@ -48,63 +80,9 @@
        		 <li class="WaterProcess"><span><%= link_to "Water Process", resource_path('electricity') %></span></li>
        		 <li class="CampusIntensity"><span><%= link_to "Campus Intensity", resource_path('electricity') %></span></li>
     	</ul>
-    	<!-- <div class="canvas">
-       		 <canvas id="canvas-html-bottom" class="bottom"></canvas>
-  		</div>  --> 
-		
-		<!-- <div class="col-md-2">
-			<div class="solar_generation">
-				<%= link_to(image_tag('purple_hide.png'), resource_path('electricity')) %>
-			</div>
-		</div>
-
-		<div class="col-md-2">
-			<div class="solar_generation">
-				<%= link_to(image_tag('red_hide.png'), resource_path('electricity')) %>
-			</div>
-			
-
-		</div>
-		<div class="col-md-2">
-			<div class="solar_generation">	
-				<%= link_to(image_tag('blue_hide.png'), resource_path('electricity') ) %>
-			</div>
-		</div>
-		<div class="col-md-2">
-			<div class="solar_generation"></div>
-			<%= link_to(image_tag('blue_hide.png'), '\resource\electricity') %>
-
-		</div>
-
-	
-
-		<div class="col-md-2 col-md-offset-2">
-			<div> 
-				<h2>Generated Today</h2>
-				<h2>10 kWh</h2>
-			</div>
-		</div> -->
+   
 	</div>
 
-	<!-- <div class="row">
-		<div class="col-md-12">
-			<div class="first_graph" style=" border:solid black 2px; text-align:center; padding:20px;">
-				<h2>Cummulative Annual kWh (July-July) </h2>
-			</div>	
-		</div>
-	</div>
-
-
-	<div class="row">
-		<div class="col-md-6">
-			<h2>+ Production / Use </h2>
-			<canvas id="myChart" width="400" height="400"></canvas>
-		</div>
-
-		<div class="col-md-6">
-			<h2>+ Zero Net Energy Goal </h2>
-		</div>
-	</div> -->
 
 </div>
 
@@ -113,6 +91,13 @@
 <!-- 
 <h1>Dash#index</h1>
 <p>Find me in app/views/dash/index.html.erb</p> -->
+
+
+<div style="text-align:center;">
+	<a href="#blue" class="circle blue"> <span>Water</span> </a>
+	<a href="#green" class="circle green"><span>Solar</span></a>
+	<a href="#red" class="circle red"><span>Genneration</span></a>
+	<a href="#orange" class="circle orange"><span>Consumption</span></a>
 
 
 </body>
