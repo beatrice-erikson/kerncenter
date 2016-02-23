@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151202211351) do
+ActiveRecord::Schema.define(version: 20160223172532) do
 
   create_table "measurements", force: :cascade do |t|
     t.integer  "sensor_id"
@@ -25,26 +25,12 @@ ActiveRecord::Schema.define(version: 20151202211351) do
     t.string "name"
   end
 
-  create_table "room_program_time_maps", force: :cascade do |t|
-    t.integer  "room_id"
-    t.integer  "program_id"
-    t.datetime "start"
-    t.datetime "end"
-  end
-
-  add_index "room_program_time_maps", ["program_id"], name: "index_room_program_time_maps_on_program_id"
-  add_index "room_program_time_maps", ["room_id"], name: "index_room_program_time_maps_on_room_id"
-
-  create_table "rooms", force: :cascade do |t|
-    t.string "name"
-  end
-
   create_table "sensors", force: :cascade do |t|
     t.integer "subtype_id"
-    t.integer "room_id"
+    t.integer "program_id"
   end
 
-  add_index "sensors", ["room_id"], name: "index_sensors_on_room_id"
+  add_index "sensors", ["program_id"], name: "index_sensors_on_program_id"
   add_index "sensors", ["subtype_id"], name: "index_sensors_on_subtype_id"
 
   create_table "subtypes", force: :cascade do |t|

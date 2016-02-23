@@ -1,32 +1,12 @@
-<style>
-	.timeButton {
-		background-color:transparent;
-		-moz-border-radius:28px;
-		-webkit-border-radius:28px;
-		border-radius:28px;
-		border:1px solid #a8a8a8;
-		display:inline-block;
-		cursor:pointer;
-		color:#000000;
-		font-family:Arial;
-		font-size:17px;
-		padding:16px 31px;
-		text-decoration:none;
-	}
-	.myButton:active {
-		position:relative;
-		top:1px;
-	}
-</style>
-<div style="width:90%;white-space:nowrap">
-	<div style="display:inline-block;width:60%">
+<div class="resourceWrapper">
+	<div class="lineChart">
 		<%= improved_line_chart(*@resource_vars) %><br />
-		<div style="display:inline-block;max-width:60%;margin:0 auto">
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "7 Days", "/resource/#{@resource.resource}/" + 7.days.ago.to_s + "/" + DateTime.now.to_s, class: "timeButton" %>
-			<%= link_to "30 Days", "/resource/#{@resource.resource}/" + 30.days.ago.to_s + "/" + DateTime.now.to_s, class: "timeButton" %>
-			<%= link_to "12 Months", "/resource/#{@resource.resource}/" + 12.months.ago.to_s + "/" + DateTime.now.to_s, class: "timeButton" %>
-		</div>
+			<div class="timeButtonWrapper">
+				<%= link_to "7 Days", "/resource/#{@resource.resource}/" + 7.days.ago.to_s + "/" + DateTime.now.to_s, class: "timeButton" %>
+				<%= link_to "30 Days", "/resource/#{@resource.resource}/" + 30.days.ago.to_s + "/" + DateTime.now.to_s, class: "timeButton" %>
+				<%= link_to "12 Months", "/resource/#{@resource.resource}/" + 12.months.ago.to_s + "/" + DateTime.now.to_s, class: "timeButton" %>
+			</div>
 	</div>
-	<div style="display:inline-block;max-width:40%;align:top"><%= pie_chart(*@resource_vars) %></div>
+	<div class="pieChart"><%= pie_chart(*@resource_vars) %></div>
 </div>
 

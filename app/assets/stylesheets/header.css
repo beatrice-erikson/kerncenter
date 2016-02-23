@@ -1,0 +1,47 @@
+.logoWrapper {
+	text-align:center;
+	padding-top:20px;
+}
+.navWrapper {
+	text-align:center;
+	padding-bottom:20px;
+}
+
+a {
+	color:black;
+	text-decoration:none;
+}
+
+.circle, .current {
+	display: inline-block;
+	width: 120px; height: 120px;
+	border: 15px solid;
+	border-radius: 100px;
+	text-decoration: none;
+	color: black;
+	background-color: white;
+	transition: 0.3s;
+	margin: 5px;
+	box-shadow: -2px 2px 1px rgba(0,0,0,0.5);
+	position: relative;
+}
+
+.circle div, .current div {
+	left:50%;
+	margin-top:40%;
+	transition: 0.3s;
+}
+
+.circle:hover, .current { width: 140px; height: 140px; margin: 0;
+	box-shadow: -15px 15px 10px rgba(0,0,0,0.5);
+}
+.circle:hover { z-index: 11;}
+.current {z-index: 10;}
+.circle:hover div, .current div { font-size: 1.5em; }
+
+
+/* unique color classes */
+.blue { border-color: blue; }
+.green { border-color: green; }
+.red { border-color: red; }
+.orange { border-color: orange; }
