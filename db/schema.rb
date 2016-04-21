@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223172532) do
+ActiveRecord::Schema.define(version: 20160421201312) do
 
   create_table "measurements", force: :cascade do |t|
-    t.integer  "sensor_id"
-    t.datetime "time"
-    t.integer  "amount"
+    t.integer "sensor_id"
+    t.date    "date"
+    t.integer "amount"
   end
 
   add_index "measurements", ["sensor_id"], name: "index_measurements_on_sensor_id"

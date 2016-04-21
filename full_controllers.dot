@@ -1,0 +1,10 @@
+digraph controllers_diagram {
+	graph[overlap=false, splines=true, bgcolor="none"]
+	"ApplicationController" [shape=Mrecord, label="{ApplicationController|\l|\l|_layout\l}"]
+	"DashController" [shape=Mrecord, label="{DashController|index\l|\l|_layout\l}"]
+	"ProgramController" [shape=Mrecord, label="{ProgramController|index\lshow\l|\l|_layout\l}"]
+	"ResourceController" [shape=Mrecord, label="{ResourceController|electricity\lwater\l|\l|_layout\l}"]
+	"ApplicationController" -> "DashController" [label="", arrowhead="none", arrowtail="onormal"]
+	"ApplicationController" -> "ProgramController" [label="", arrowhead="none", arrowtail="onormal"]
+	"ApplicationController" -> "ResourceController" [label="", arrowhead="none", arrowtail="onormal"]
+}

@@ -23,9 +23,9 @@ rlist.each do |rname, subuselist, subgenlist|
 		subtype = Subtype.create(type_id: resource.id, name: subname, usage?: true)
 		for i in 0..1
 			sensor = Sensor.create(subtype_id: subtype.id, program_id: program.id)
-			for h in 0..200
+			for d in 0..50
 				for x in 0..2
-					Measurement.create(sensor_id: sensor.id, time: (h*5).hours.ago, amount: prng.rand(50.00))
+					Measurement.create(sensor_id: sensor.id, date: d.days.ago, amount: prng.rand(50.00))
 				end
 			end
 		end
@@ -34,9 +34,9 @@ rlist.each do |rname, subuselist, subgenlist|
 		subtype = Subtype.create(type_id: resource.id, name: subname, usage?: false)
 		for i in 0..1
 			sensor = Sensor.create(subtype_id: subtype.id, program_id: program.id)
-			for h in 0..200
+			for d in 0..50
 				for x in 0..2
-					Measurement.create(sensor_id: sensor.id, time: (h*5).hours.ago, amount: prng.rand(150.00))
+					Measurement.create(sensor_id: sensor.id, date: d.days.ago, amount: prng.rand(150.00))
 				end
 			end
 		end

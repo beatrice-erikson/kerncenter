@@ -1,112 +1,29 @@
 module ResourceHelper
-	def line_chart(resource, subtypes, resource_usage, resource_generation, hours)
-		@chart = LazyHighCharts::HighChart.new("graph") do |g|
-			g.title(text: resource.capitalize + " Over Time")
-			g.xAxis(categories: hours)
-			g.series(name: resource.capitalize + " Usage", data: resource_usage)
-			g.series(name: resource.capitalize + " Generation", data: resource_generation)
+  include ChartHelper
+  def getResourceVars (resource)
+		@resource = Type.includes(:subtypes => :sensors).find_by_resource(resource)
+		@usage_types = @resource.subtypes.where(usage?: true)
+		@usage_type_names = @usage_types.pluck(:name)
+		@gen_types = @resource.subtypes.where(usage?: false)
+		@gen_type_names = @gen_types.pluck(:name)
+		@usage = @usage_types.map {|u| u.sensors.map {|s| s.amounts(params[:start], params[:stop]).sum}.sum}
+		@gen = @gen_types.map {|g| g.sensors.map {|s| s.amounts(params[:start], params[:stop]).sum}.sum}
+		@days = granularity(params[:start].to_date, params[:stop].to_date)
+		@day_names = @days.map { |d| d[0].to_formatted_s(:short)[0..5] }
+		@usage_day_values = Array.new
+		@gen_day_values = Array.new
+		for daypair in @days
+			@usage_day_values << @usage_types.map {|u| u.sensors.map {|s| s.amounts(daypair[0], daypair[1]).sum}.sum}
+			@gen_day_values << @gen_types.map {|g| g.sensors.map {|s| s.amounts(daypair[0], daypair[1]).sum}.sum}
 		end
-		high_chart(resource + "_chart", @chart)
+		@usage_day_values = @usage_day_values.transpose
+		@usage_cuml = @usage_day_values.transpose.map {|x| x.reduce(:+)}
+		@usage_day_values = @usage_type_names.zip(@usage_day_values)
+		@usage_day_values = Hash[@usage_day_values.map {|key, value| [key, value]}]
+		@gen_day_values = @gen_day_values.transpose
+		@gen_cuml = @gen_day_values.transpose.map {|x| x.reduce(:+)}
+		@gen_day_values = @gen_type_names.zip(@gen_day_values)
+		@gen_day_values = Hash[@gen_day_values.map {|key, value| [key, value]}]
+		@resource_vars = [@resource.resource, @usage_day_values, @gen_day_values, @usage_cuml, @gen_cuml, @day_names]
 	end
-  
-  #this will be a cumulative graph plotting a variable number of series
-  def improved_line_chart(resource, usage, generation, use_totals, gen_totals, hours)
-    @chart = LazyHighCharts::HighChart.new("spline") do |p|
-      p.title(text: resource.capitalize + " Over Time")
-      p.xAxis(categories: hours)
-	  p.plotOptions({:spline => {:marker => {:enabled => false}}})
-      usage.each {|type, values| p.series(type: 'spline', name: type.capitalize, data: values)}
-	  generation.each {|type, values| p.series(type: 'spline', name: type.capitalize, data: values)}
-      p.series(type: 'spline', name: "Cumulative Usage", data: use_totals)
-	  p.series(type: 'spline', name: "Cumulative Generation", data: gen_totals)
-      p.legend(:layout => 'horizontal', :style => {
-        :left => 'auto',
-        :bottom => 'auto',
-        :right => '50px',
-        :top => '100px'
-      })
-    end
-    high_chart(resource + "_chart", @chart)
-  end
-  
-
-  # this will be a cumulative graph reflecting the entire progress of the building energy consumption, generation, and the net result of the former two
-  def overview_chart(resource, usage, generation, use_totals, gen_totals, hours)
-    @chart = LazyHighCharts::HighChart.new("spline") do |i|
-      i.chart({
-        :type => 'areaspline',
-        :margin => [30, 5, 5, 30],
-        :zoomType => 'x'
-      })
-      i.legend(:layout => 'horizontal', :style => {
-        :left => 'auto',
-        :bottom => 'auto',
-        :right => '50px',
-        :top => '100px'
-      })
-      i.plotOptions({spline:{marker:{enabled: true}}})
-			i.series(name: "Cumulative Consumption: " + resource, data: use_totals)
-			i.series(name: "Cumulative Generation: " + resource, data: gen_totals)
-      i.series(name: "Net " + resource, data: gen_totals - use_totals)
-      i.subtitle(text: "Select plot area to zoom in.")
-      i.title(text: "Living Building Progress")
-      i.xAxis({
-        dateTimeLabelFormats: {
-          month: '%e. %b',
-          year: '%b'
-        },
-        type: 'datetime',
-        title: {
-          text: "Date"
-        }
-      })
-      i.yAxis({
-        plotOptions: {
-          spline: {
-            marker: {
-              enabled: true
-            }
-          }
-        },
-        title: {
-          text: "Energy Units (  )"
-        },
-        tooltip: {
-          headerFormat: '{series.name}<br>',
-          pointFormat: '{point.x.:%e. %b}: {point.y:.2f} m'
-        }
-      })
-        
-    end
-    high_chart("irregular_intervals_zoomable" + resource + "_chart", @chart)
-  end
-  
-  #this will be a pie chart giving an overview of usage from the nearest midnight to current time
-  def pie_chart(resource, usage, generation, use_totals, gen_totals, hours)
-		@chart = LazyHighCharts::HighChart.new("pie") do |f|
-      f.chart({
-        :type => "pie",
-        :margin => [30, 5, 5, 5]
-      })
-      f.title(text: "Relative " + resource.capitalize + " Usage")
-      f.legend(:layout => 'horizontal')
-	  usedata = usage.map {|t, v| [t.capitalize, v.sum]}
-	  series = {
-				:type=> 'pie',
-				:name=> resource.capitalize + ' Chart',
-				:data=> usedata,
-				:innerSize=> 200}
-	  f.series(series)
-      f.plot_options(:pie =>{
-        :allowPointSelect => true, 
-        :cursor => "pointer", 
-        :dataLabels =>{
-          :enabled => true,
-          :color => "black",
-          :format => '<b>{point.name}</b>: {point.percentage:.1f} %'
-        }
-      })
-    end
-    high_chart("today_" + resource + "_chart", @chart)
-  end
 end

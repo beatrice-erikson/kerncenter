@@ -6,11 +6,11 @@ class Sensor < ActiveRecord::Base
 	
 	def amounts (start, stop)
 		self.measurements.
-		where("time >= ?", start).
-		where("time < ?", stop).
+		where("date >= ?", start).
+		where("date < ?", stop).
 		map {|m| m.amount}
 	end
 	def times
-		self.measurements.map {|m| m.time}
+		self.measurements.map {|m| m.date}
 	end
 end

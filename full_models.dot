@@ -1,0 +1,18 @@
+digraph models_diagram {
+	graph[overlap=false, splines=true, bgcolor="none"]
+	"Measurement" [shape=Mrecord, label="{Measurement|id :INTEGER\lsensor_id :integer\ltime :datetime\lamount :integer\l}"]
+	"Program" [shape=Mrecord, label="{Program|id :INTEGER\lname :varchar\l}"]
+	"Sensor" [shape=Mrecord, label="{Sensor|id :INTEGER\lsubtype_id :integer\lprogram_id :integer\l}"]
+	"Subtype" [shape=Mrecord, label="{Subtype|id :INTEGER\ltype_id :integer\lname :varchar\lusage? :boolean\l}"]
+	"Type" [shape=Mrecord, label="{Type|id :INTEGER\lresource :varchar\l}"]
+	"ActiveRecord::Base" -> "Measurement" [label="", arrowhead="none", arrowtail="onormal"]
+	"Program" -> "Sensor" [arrowtail=odot, arrowhead=crow, dir=both color="#C1DC4B"]
+	"ActiveRecord::Base" -> "Program" [label="", arrowhead="none", arrowtail="onormal"]
+	"Sensor" -> "Measurement" [arrowtail=odot, arrowhead=crow, dir=both color="#1D31A1"]
+	"ActiveRecord::Base" -> "Sensor" [label="", arrowhead="none", arrowtail="onormal"]
+	"Subtype" -> "Sensor" [arrowtail=odot, arrowhead=crow, dir=both color="#E47988"]
+	"ActiveRecord::Base" -> "Subtype" [label="", arrowhead="none", arrowtail="onormal"]
+	"Type" -> "Subtype" [arrowtail=odot, arrowhead=crow, dir=both color="#07E0C9"]
+	"Type" -> "Sensor" [arrowtail=crow, arrowhead=crow, dir=both color="#988C10"]
+	"ActiveRecord::Base" -> "Type" [label="", arrowhead="none", arrowtail="onormal"]
+}
