@@ -1,3 +1,7 @@
+$deep-blue: #3B8A8A;
+$deep-red: #E33440;
+$deep-purple: #9461A2;
+$tang: #F7B245;
 .navWrapper {
 	text-align:center;
 	padding-bottom:20px;
@@ -37,10 +41,10 @@ a {
 .circle:hover { z-index: 11;}
 .current {z-index: 10;}
 .circle:hover div, .current div { font-size: 1.3em; }
-
-$colors: "blue", "purple", "red", "orange";
-@each $color in $colors {
+ 
+$colors: (deep-blue: $deep-blue, deep-purple: $deep-purple, deep-red: $deep-red, tang: $tang);
+@each $color, $hex in $colors {
 	.#{$color} {
-		border-color: #{$color}
+		border-color: #{$hex}
 	}
 }

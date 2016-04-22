@@ -1,7 +1,6 @@
 module ApplicationHelper
 	require 'date'
 	require 'active_support'
-	require 'active_support/core_ext/date_time'
 	def granularity(startDay, stopDay)
 		raise "Start day must be before end day" if startDay >= stopDay
 		interval = 7
@@ -12,22 +11,23 @@ module ApplicationHelper
 			interval = 12
 		end
 		remainder = (stopDay - startDay) % interval
-		firstDay = remainder / 2
-		lastDay = remainder - firstDay
-		grain = (stopDay - startDay - lastDay) / interval
+		remainderStart = startDay + (remainder / 2)
+		remainderStop = stopDay + remainder - (remainder / 2)
+		grain = (stopDay - startDay - remainder) / interval
 		days = []
-		if firstDay > 0
-			days.push([startDay, startDay])
+		if remainderStart > startDay
+			days << [startDay, remainderStart]
 		end
-		startDay += firstDay
-		while startDay < (stopDay - lastDay) do
-			days.push([startDay, startDay])
-			startDay += grain
+		day = remainderStart
+		while day < remainderStop do
+			days << [day, day+grain]
+			day += grain
 		end
-		if (lastDay > 0)
-			days.push([stopDay, stopDay])
+		if remainderStop < stopDay
+			days << [day, stopDay]
 		end
 		days
+		#until it was fixed, this helper was the equivalent of putting a sweater in a microwave
 	end
 	def makeLink(link, name, color) #Returns nav link, unless it links to current page
 		if !current_page?(link)

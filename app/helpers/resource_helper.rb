@@ -17,10 +17,20 @@ module ResourceHelper
 			@gen_day_values << @gen_types.map {|g| g.sensors.map {|s| s.amounts(daypair[0], daypair[1]).sum}.sum}
 		end
 		@usage_day_values = @usage_day_values.transpose
+		for i in 0 ... @usage_day_values.size
+			for j in 1 ... @usage_day_values[i].size
+				@usage_day_values[i][j] += @usage_day_values[i][j-1]
+			end
+		end
 		@usage_cuml = @usage_day_values.transpose.map {|x| x.reduce(:+)}
 		@usage_day_values = @usage_type_names.zip(@usage_day_values)
 		@usage_day_values = Hash[@usage_day_values.map {|key, value| [key, value]}]
 		@gen_day_values = @gen_day_values.transpose
+		for i in 0 ... @gen_day_values.size
+			for j in 1 ... @gen_day_values[i].size
+				@gen_day_values[i][j] += @gen_day_values[i][j-1]
+			end
+		end
 		@gen_cuml = @gen_day_values.transpose.map {|x| x.reduce(:+)}
 		@gen_day_values = @gen_type_names.zip(@gen_day_values)
 		@gen_day_values = Hash[@gen_day_values.map {|key, value| [key, value]}]
