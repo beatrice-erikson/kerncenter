@@ -1,5 +1,10 @@
 
 <div class="navWrapper">
+	<% if !current_page?(root_path) %>
+		<%= link_to(content_tag(:div, 'Home'), root_path, class: 'circle black') %>
+	<% else %>
+		<%= content_tag(:div, content_tag(:div, 'Home'), class: 'current black') %>
+	<% end %>
 	<%= makeLink(electricity_path, 'Solar', 'tang') %>
 	<%= makeLink(water_path, 'Water', 'deep-blue') %>
 	<%= makeLink(info_path, 'Learn More', 'deep-red') %>
