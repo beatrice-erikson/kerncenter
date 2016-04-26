@@ -1,0 +1,19 @@
+<table id="infoWrapper">
+	<tr>
+		<td class="infoNav">
+			<% if lookup_context.template_exists?(@prevpage, "info", true) %>
+				<% link = "/info/" + (@pagenum - 1).to_s %>
+				<%= link_to content_tag( :div, "Prev"), link, class: 'circle' %>
+			<% end %>
+		</td>
+		<td id="infoContent">
+			<%= render :partial => @page %>
+		</td>
+		<td class="infoNav">
+			<% if lookup_context.template_exists?(@nextpage, "info", true) %>
+				<% link = "/info/" + (@pagenum + 1).to_s %>
+				<%= link_to content_tag( :div, "Next"), link, class: 'circle' %>
+			<% end %>
+		</td>
+	</tr>
+</table>

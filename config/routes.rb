@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'info', to: 'info#show', :defaults => { :page => 0 }, as: 'info'
+  get 'info/:page', to: 'info#show'
+
   get 'programs', to: 'program#index'
 
   get 'programs/:program', to: 'program#show'
