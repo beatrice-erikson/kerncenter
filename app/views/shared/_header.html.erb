@@ -2,12 +2,12 @@
 	<div class="logoWrapper">
 		<% if !current_page?(root_path) %>
 			<%= link_to(root_path) do %>
-				<%= image_tag("HampshireLogo.png", :alt => "HampshireLogo", :size => '150x75') %>
-				<t1>R<span style="letter-spacing:-.15em;">.W.</span> Kern Center</t1>
+				<t1><%= image_tag("HampshireLogo.png", :alt => "HampshireLogo") %>
+				&nbsp;R<span style="letter-spacing:-.15em;">.W.</span> Kern Center</t1>
 			<% end %>
 		<% else %>
-			<%= image_tag("HampshireLogo.png", :alt => "HampshireLogo", :size => '150x75') %>
-			<t1>R<span style="letter-spacing:-.15em;">.W.</span> Kern Center</t1>
+			<t1><%= image_tag("HampshireLogo.png", :alt => "HampshireLogo") %>
+			&nbsp;R<span style="letter-spacing:-.15em;">.W.</span> Kern Center</t1>
 		<% end %>
 	</div>
 </div>
