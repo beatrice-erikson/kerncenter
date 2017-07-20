@@ -13,6 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require legacy
+//= require picker
+//= require picker.date
 //= require_tree .
 
 //= require highcharts/highcharts
