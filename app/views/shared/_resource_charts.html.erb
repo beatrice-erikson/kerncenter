@@ -1,10 +1,11 @@
 <div class="resourceWrapper">
+	
 	<div class="lineChart">
-		<%= improved_line_chart(*@resource_vars) %><br />
+		<%= column_chart @rsubs.map {|stype| {name: stype[0], data: stype[1].group_by_day(:date).sum(:amount)}}, stacked: true, library: { :series => {0 => { type: "line"}}} %>
 			<div class="timeButtonWrapper">
-				<%#= link_to "7 Days", "/resource/#{@resource.resource}/" + 7.days.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
-				<%#= link_to "30 Days", "/resource/#{@resource.resource}/" + 30.days.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
-				<%#= link_to "12 Months", "/resource/#{@resource.resource}/" + 12.months.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
+				<%= link_to "7 Days", "/resource/#{@resource.resource}/" + 7.days.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
+				<%= link_to "30 Days", "/resource/#{@resource.resource}/" + 30.days.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
+				<%= link_to "12 Months", "/resource/#{@resource.resource}/" + 12.months.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
 				<!-- https://codepen.io/amsul/details/nGckA + own additions -->
 				<input type="text" id="input_from" value="<%= params[:start].to_date.strftime('%d %B, %Y')%>">
 				<input type="text" id="input_to" value="<%= params[:stop].to_date.strftime('%d %B, %Y')%>">
@@ -21,27 +22,19 @@
 
 
 						// Check if there’s a “from” or “to” date to start with.
-						if ( from_picker.get('value') ) {						
-						  var from_date = new Date(from_picker.get('select','yyyy-mm-dd'))
-						  from_date.setDate(from_date.getDate() + 8)
-						  to_picker.set('min', from_date)
-						  
+						if ( from_picker.get('value') ) {
+						  to_picker.set('min', from_picker.get('select'))
 						  fdate = from_picker.get('select', 'yyyy-mm-dd');
 						}
 						if ( to_picker.get('value') ) {
-						  var to_date = new Date(to_picker.get('select','yyyy-mm-dd'))
-						  to_date.setDate(to_date.getDate() - 6)
-						  from_picker.set('max', to_date)
+						  from_picker.set('max', to_picker.get('select'))
 						  tdate = to_picker.get('select', 'yyyy-mm-dd');
 						}
 
 						from_picker.on('set', function(event) {
 						  if ( event.select ) {
-							var from_date = new Date(from_picker.get('select', 'yyyy-mm-dd'))
-							from_date.setDate(from_date.getDate() + 8)
-							to_picker.set('min', from_date)
+							to_picker.set('min', from_picker.get('select'))
 							fdate = from_picker.get('select', 'yyyy-mm-dd');
-							
 							if (tdate) {
 								window.open(url+fdate+"/"+tdate, "_self")
 							}
@@ -49,11 +42,8 @@
 						})
 						to_picker.on('set', function(event) {
 						  if ( event.select ) {
-							var to_date = new Date(to_picker.get('select', 'yyyy-mm-dd'))
-							to_date.setDate(to_date.getDate() - 6)
-							from_picker.set('max', to_date)
+							from_picker.set('max', to_picker.get('select'))
 							tdate = to_picker.get('select', 'yyyy-mm-dd');
-							
 							if (fdate) {
 								window.open(url+fdate+"/"+tdate, "_self")
 							}
@@ -64,6 +54,6 @@
 				</script>
 			</div>
 	</div>
-	<div class="pieChart"><%= pie_chart(*@resource_vars) %></div>
+	<div class="pieChart"></div>
 </div>
-
+<%= params[:resource] %>

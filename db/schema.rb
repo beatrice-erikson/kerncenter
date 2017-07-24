@@ -13,13 +13,16 @@
 
 ActiveRecord::Schema.define(version: 20160421201312) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "measurements", force: :cascade do |t|
     t.integer "sensor_id"
     t.date    "date"
     t.integer "amount"
   end
 
-  add_index "measurements", ["sensor_id"], name: "index_measurements_on_sensor_id"
+  add_index "measurements", ["sensor_id"], name: "index_measurements_on_sensor_id", using: :btree
 
   create_table "programs", force: :cascade do |t|
     t.string "name"
@@ -30,8 +33,8 @@ ActiveRecord::Schema.define(version: 20160421201312) do
     t.integer "program_id"
   end
 
-  add_index "sensors", ["program_id"], name: "index_sensors_on_program_id"
-  add_index "sensors", ["subtype_id"], name: "index_sensors_on_subtype_id"
+  add_index "sensors", ["program_id"], name: "index_sensors_on_program_id", using: :btree
+  add_index "sensors", ["subtype_id"], name: "index_sensors_on_subtype_id", using: :btree
 
   create_table "subtypes", force: :cascade do |t|
     t.integer "type_id"
@@ -39,7 +42,7 @@ ActiveRecord::Schema.define(version: 20160421201312) do
     t.boolean "usage?"
   end
 
-  add_index "subtypes", ["type_id"], name: "index_subtypes_on_type_id"
+  add_index "subtypes", ["type_id"], name: "index_subtypes_on_type_id", using: :btree
 
   create_table "types", force: :cascade do |t|
     t.string "resource"

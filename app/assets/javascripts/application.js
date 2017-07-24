@@ -12,14 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require chartkick
 //= require legacy
 //= require picker
 //= require picker.date
+//= require turbolinks
 //= require_tree .
-
-//= require highcharts/highcharts
-//= require highcharts/highcharts-more
-//= require highcharts/highstock
-//= require highcharts/modules/exporting
 
