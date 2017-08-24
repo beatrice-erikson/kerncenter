@@ -1,7 +1,7 @@
 <div class="resourceWrapper">
 	
 	<div class="lineChart">
-		<!-- <%= column_chart @rsubs.map {|stype| {name: stype[0], data: stype[1].group_by_day(:date).sum(:amount)}}, stacked: true, library: { :series => {0 => { type: "line"}}} %> -->
+		<%= column_chart @rsubs.map {|stype| {name: stype[0], data: stype[1].group_by_day(:date).sum(:amount)}}, stacked: true, library: { :series => {0 => { type: "line"}}} %>
 		<%= ForTheGraph(@rsubs)  %>
 			<div class="timeButtonWrapper">
 				<%= link_to "7 Days", "/resource/#{@resource.resource}/" + 7.days.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
