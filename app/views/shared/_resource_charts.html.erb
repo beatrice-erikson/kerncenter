@@ -1,14 +1,13 @@
 <div class="resourceWrapper">
 	
 	<div class="lineChart">
-		<%= column_chart @rsubs.map {|stype| {name: stype[0], data: stype[1].group_by_day(:date).sum(:amount)}}, stacked: true, library: { :series => {0 => { type: "line"}}} %>
-		<%= ForTheGraph(@rsubs)  %>
+		<%= stackedSubtypeChart(:day) %>
 			<div class="timeButtonWrapper">
 				<%= link_to "7 Days", "/resource/#{@resource.resource}/" + 7.days.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
 				<%= link_to "30 Days", "/resource/#{@resource.resource}/" + 30.days.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
 				<%= link_to "12 Months", "/resource/#{@resource.resource}/" + 12.months.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
 				<!-- https://codepen.io/amsul/details/nGckA + own additions -->
-				<BR>
+				<br />
 				<input type="text" id="input_from" value="<%= params[:start].to_date.strftime('%d %B, %Y')%>">
 				<input type="text" id="input_to" value="<%= params[:stop].to_date.strftime('%d %B, %Y')%>">
 				<script>

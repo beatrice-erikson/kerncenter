@@ -77,19 +77,19 @@ def processCSVFiles()
 			if lineOfData.length() > 0 # skip blank lines
 				if lineOfData[0][0] != 'D' # skip header lines
 					dateTime = lineOfData[0]
-					#PutValueIntoDatabase(lineOfData[2], dateTime, "PV Solar")
+					PutValueIntoDatabase(lineOfData[2], dateTime, "PV Solar")
 					PutValueIntoDatabase(lineOfData[3], dateTime, "PV Solar")
-					#PutValueIntoDatabase(lineOfData[7], dateTime, "Inverter")
-					#PutValueIntoDatabase(lineOfData[8], dateTime, "Elevator")
-					#PutValueIntoDatabase(lineOfData[9], dateTime, "PB1")
-					#PutValueIntoDatabase(lineOfData[10], dateTime, "P11")
-					#PutValueIntoDatabase(lineOfData[11], dateTime, "P12")
-					#PutValueIntoDatabase(lineOfData[12], dateTime, "P21")
-					#PutValueIntoDatabase(lineOfData[13], dateTime, "P22")
-					#PutValueIntoDatabase(lineOfData[14], dateTime, "LB1")
-					#PutValueIntoDatabase(lineOfData[15], dateTime, "L11")
-					#PutValueIntoDatabase(lineOfData[16], dateTime, "L21")
-					#PutValueIntoDatabase(lineOfData[17], dateTime, "L22")
+					PutValueIntoDatabase(lineOfData[7], dateTime, "Inverter")
+					PutValueIntoDatabase(lineOfData[8], dateTime, "Elevator")
+					PutValueIntoDatabase(lineOfData[9], dateTime, "PB1")
+					PutValueIntoDatabase(lineOfData[10], dateTime, "P11")
+					PutValueIntoDatabase(lineOfData[11], dateTime, "P12")
+					PutValueIntoDatabase(lineOfData[12], dateTime, "P21")
+					PutValueIntoDatabase(lineOfData[13], dateTime, "P22")
+					PutValueIntoDatabase(lineOfData[14], dateTime, "LB1")
+					PutValueIntoDatabase(lineOfData[15], dateTime, "L11")
+					PutValueIntoDatabase(lineOfData[16], dateTime, "L21")
+					PutValueIntoDatabase(lineOfData[17], dateTime, "L22")
 				end
 			end
 		end
