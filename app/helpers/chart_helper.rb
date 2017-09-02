@@ -11,24 +11,28 @@ module ChartHelper
               .where("types.resource = ?", @rname)
               .order('subtypes."usage?"')
               .group_by_period(grouping, :date).group("subtypes.id, subtypes.name").maximum(:amount)
-    rsubs = rsubs.group_by do |(_, subname),_|
-              subname #group by subtype name
-            end
-    rsubs.each do |k,v|
-      rsubs[k] = v.map{|date| [date[0][0],date[1]]} #format as [[date, measurement],...]
-      v.reverse.each_index do |i|
+    agg = {}
+    rsubs.map do |(date, stype), value|
+      agg[stype] ||= { name: stype, data: [] }
+      agg[stype][:data].append([date,value])
+    end
+    rsubs = agg.values
+    rsubs.each_with_index do |stype, si|
+      stype[:data].to_enum.with_index.reverse_each do |v, i|
         if i > 0
-          rsubs[k][i][1] = v[i][1]-v[i-1][1]
+          rsubs[si][:data][i][1] -= rsubs[si][:data][i-1][1]
         end
       end
-      rsubs[k].shift
+      rsubs[si][:data].shift
     end
-
-    rsubs.map{|stype,data| {name: stype, data: data}}
-
-    return  column_chart rsubs,
+    gencount = @resource.subtypes.where(usage?: false).count
+    lines = {}
+    for i in 0...gencount
+      lines[i] = {type: "line"}
+    end
+    return column_chart rsubs,
                         stacked: true,
-                        library: { :series => {0 => { type: "line"}}}
+                        library: { :series => lines }
   end
   def stackedProgramChart(resource)
     
