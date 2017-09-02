@@ -1,44 +1,34 @@
 module ChartHelper
+  def pluralize(symbol)
+    return symbol.to_s.pluralize.to_sym
+  end
   def stackedSubtypeChart(grouping)
     rsubs = Measurement
-                .where("measurements.date >= ?", params[:start])
-                .where("measurements.date <= ?", params[:stop])
-                .joins(sensor: {subtype: :type})
-                .where('types.resource = ?', @rname)
-                .group('subtypes."usage?", measurements.id')
-                #.select("types.id, subtypes.name, max(amount)").map(&:attributes)
-                #.select("types.resource")
-                #.where("types.resource = ?", @rname)
-                #.select("measurements.amount").map(&:attributes)
-#    rsubs = Measurement.find_by_sql(
- #             'SELECT
-  #              t.resource,
-   #             st.name,
-    #            st."usage?",
-     #           m.date,
-      #          m.amount
-       #       FROM Types t
-        #      INNER JOIN Subtypes st ON t.id = st.type_id
-         #     INNER JOIN Sensors sn ON st.id = sn.subtype_id
-          #    INNER JOIN Measurements m ON sn.id = m.sensor_id')
-           #   .where('m.date <= ?', params[:start])
-            #  .where('m.date >= ?', params[:stop])
-             # .group_by_period(grouping, :date)
-    #rsubs = Measurement
-     #       .where("measurements.date >= ?", params[:start].to_date().advance(grouping => -1))
-      #      .where("measurements.date <= ?", params[:stop])
-       #     .group_by_period(grouping, :date)
-            #.joins(sensor: :subtype)
-            #.merge(Subtype.order(:usage?))
-                
+              .where("measurements.date >= ? AND measurements.date <= ?",
+                  params[:start].to_date.advance(pluralize(grouping) => -1),
+                  params[:stop].to_date.advance(pluralize(grouping) => 1))
+              .joins(sensor: {subtype: :type})
+              .where("types.resource = ?", @rname)
+              .order('subtypes."usage?"')
+              .group_by_period(grouping, :date).group("subtypes.id, subtypes.name").maximum(:amount)
+    rsubs = rsubs.group_by do |(_, subname),_|
+              subname #group by subtype name
+            end
+    rsubs.each do |k,v|
+      rsubs[k] = v.map{|date| [date[0][0],date[1]]} #format as [[date, measurement],...]
+      v.reverse.each_index do |i|
+        if i > 0
+          rsubs[k][i][1] = v[i][1]-v[i-1][1]
+        end
+      end
+      rsubs[k].shift
+    end
 
-    #rsubs = rsubs.map {|stype|
-     #                   {name: stype[0],
-      #                  data: stype[1]}}
-    
-    return  rsubs
-                 #       stacked: true,
-                  #      library: { :series => {0 => { type: "line"}}}
+    rsubs.map{|stype,data| {name: stype, data: data}}
+
+    return  column_chart rsubs,
+                        stacked: true,
+                        library: { :series => {0 => { type: "line"}}}
   end
   def stackedProgramChart(resource)
     
