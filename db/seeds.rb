@@ -46,8 +46,8 @@ end
 require_relative 'sensors_master_list'
 def PutValueIntoDatabase(value, dateAndTime, codeOfSensor)
 	value = value.to_f()
-	if value < 0
-		value = 0
+	if value <= 0
+		return
 	end
 	#date = dateAndTime.split(' ')[0]
 	#time = dateAndTime.split(' ')[1]
@@ -73,7 +73,12 @@ def processCSVFiles()
 		puts "we need to process %s" % fileName
 		arrayOfData = CSV.read(fileName)
 		previousValues = Array.new(arrayOfData[2].length())
+		l = 0
 		arrayOfData.each do |lineOfData|
+			l += 1
+			if l % 100 == 0
+				puts "line %s" % l
+			end
 			if lineOfData.length() > 0 # skip blank lines
 				if lineOfData[0][0] != 'D' # skip header lines
 					dateTime = lineOfData[0]
@@ -170,6 +175,11 @@ def createRealData()
 
 	processCSVFiles()
 end
-
+def AddMore()
+    PutValueIntoDatabase(200000, "2017-09-04 12:41:16", "PV Solar")
+    PutValueIntoDatabase(400000, "2017-09-06 12:41:16", "PV Solar")
+    PutValueIntoDatabase(600000, "2017-09-07 12:41:16", "PV Solar")
+end
 #createTestData()
-createRealData()
+#createRealData()
+AddMore()
