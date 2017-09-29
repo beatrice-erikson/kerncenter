@@ -1,7 +1,7 @@
 <div class="resourceWrapper">
 	
 	<div class="lineChart">
-		<%= stackedSubtypeChart(:day) %>
+		<%= chart(*@chartvars) %>
 			<div class="timeButtonWrapper">
 				<%= link_to "7 Days", "/resource/#{@resource.resource}/" + 7.days.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>
 				<%= link_to "30 Days", "/resource/#{@resource.resource}/" + 30.days.ago.to_date.to_s + "/" + DateTime.now.to_date.to_s, class: "timeButton" %>

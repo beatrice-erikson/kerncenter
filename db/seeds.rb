@@ -19,7 +19,7 @@ def createTestData()
 	rlist.each do |rname, subuselist, subgenlist|
 		resource = Type.create(resource: rname)
 		subuselist.each do |subname|
-			subtype = Subtype.create(type_id: resource.id, name: subname, usage?: true)
+			subtype = Subtype.create(type_id: resource.id, name: subname, usage: true)
 			for i in 0..1
 				sensor = Sensor.create(subtype_id: subtype.id, program_id: program.id)
 				for d in 0..50
@@ -30,7 +30,7 @@ def createTestData()
 			end
 		end
 		subgenlist.each do |subname|
-			subtype = Subtype.create(type_id: resource.id, name: subname, usage?: false)
+			subtype = Subtype.create(type_id: resource.id, name: subname, usage: false)
 			for i in 0..1
 				sensor = Sensor.create(subtype_id: subtype.id, program_id: program.id)
 				for d in 0..50
@@ -138,9 +138,9 @@ def createRealData()
 		sensorSubtypeToAdd.type_id = idForThisTypeOfSensor
 		sensorSubtypeToAdd.name = sensorSubtype
 		if thisSensor.GetUse() == true
-			sensorSubtypeToAdd[:usage?] = true
+			sensorSubtypeToAdd[:usage] = true
 		else
-			sensorSubtypeToAdd[:usage?] = false
+			sensorSubtypeToAdd[:usage] = false
 		end
 		sensorSubtypeToAdd.save!
 	end
@@ -181,5 +181,5 @@ def AddMore()
     PutValueIntoDatabase(600000, "2017-09-07 12:41:16", "PV Solar")
 end
 #createTestData()
-#createRealData()
+createRealData()
 AddMore()

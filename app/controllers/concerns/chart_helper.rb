@@ -35,15 +35,15 @@ module ChartHelper
                   offset(params[:stop], 1, grouping))
               .joins(sensor: {subtype: :type})
               .where("types.resource = ?", @rname)
-              .order('subtypes."usage?"')
+              .order("subtypes.usage")
               .group_by_period(grouping, :date, series: false).group("subtypes.id, subtypes.name").group("sensors.id").maximum(:amount)
     rsubs = formatChartData(rsubs)
-    gencount = @resource.subtypes.where(usage?: false).count
+    gencount = @resource.subtypes.where(usage: false).count
     lines = {}
     for i in 0...gencount
       lines[i] = {type: "line"}
     end
-    column_chart rsubs, stacked: true, library: { :series => lines }
+    [rsubs, lines]
   end
   def stackedProgramChart(grouping)
     rprogs = Measurement
@@ -52,9 +52,18 @@ module ChartHelper
                 offset(params[:stop], 1, grouping))
               .joins(sensor: [:program, subtype: [:type]])
               .where("types.resource = ?", @rname)
-              .order('subtypes."usage?"')
+              .order("subtypes.usage")
               .group_by_period(grouping, :date).group("subtypes.id, programs.id, programs.name").group("sensors.id").maximum(:amount)
     rprogs = formatChartData(rprogs)
-    area_chart rprogs, stacked: true, 
+    area_chart rprogs, stacked: true
+  end
+  def gaugeChart
+    data = Measurement
+                .where("measurements.date <= ? AND measurements.date >= ?",
+                 "2017-06-29 00:00:00 UTC",
+                 "2017-06-28 23:45:00 UTC")
+                .joins(sensor: {subtype: :type})
+                .where("subtypes.usage = ?", true)
+                .group("subtypes.name").sum(:amount).to_a
   end
 end
