@@ -14,6 +14,17 @@ module ApplicationHelper
 		end
 	end
 
+	def to_csv(data)
+		CSV.generate do |csv|
+			attributes = %w{name data}
+			csv << attributes
+			data.each do |group|
+				csv << [group[:name]]
+				csv << group[:data]
+			end
+		end
+	end
+
 	def ForTheGraph(theWholeThing)
 		# theWholeThing is what is called @rsubs in the resource_charts view.
 		# It looks like an array of arrays of arrays, 

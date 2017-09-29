@@ -2,3 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#dash_container {
+    text-align: center;
+}
+
+#chart_div {
+    display: inline-block;
+    margin: 0 auto;
+    padding-top: 10px;
+}
+#chart_div table {
+    width: auto;
+    margin: 0 auto !important;
+}

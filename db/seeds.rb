@@ -19,7 +19,7 @@ def createTestData()
 	rlist.each do |rname, subuselist, subgenlist|
 		resource = Type.create(resource: rname)
 		subuselist.each do |subname|
-			subtype = Subtype.create(type_id: resource.id, name: subname, usage?: true)
+			subtype = Subtype.create(type_id: resource.id, name: subname, usage: true)
 			for i in 0..1
 				sensor = Sensor.create(subtype_id: subtype.id, program_id: program.id)
 				for d in 0..50
@@ -30,7 +30,7 @@ def createTestData()
 			end
 		end
 		subgenlist.each do |subname|
-			subtype = Subtype.create(type_id: resource.id, name: subname, usage?: false)
+			subtype = Subtype.create(type_id: resource.id, name: subname, usage: false)
 			for i in 0..1
 				sensor = Sensor.create(subtype_id: subtype.id, program_id: program.id)
 				for d in 0..50
@@ -46,8 +46,8 @@ end
 require_relative 'sensors_master_list'
 def PutValueIntoDatabase(value, dateAndTime, codeOfSensor)
 	value = value.to_f()
-	if value < 0
-		value = 0
+	if value <= 0
+		return
 	end
 	#date = dateAndTime.split(' ')[0]
 	#time = dateAndTime.split(' ')[1]
@@ -73,7 +73,12 @@ def processCSVFiles()
 		puts "we need to process %s" % fileName
 		arrayOfData = CSV.read(fileName)
 		previousValues = Array.new(arrayOfData[2].length())
+		l = 0
 		arrayOfData.each do |lineOfData|
+			l += 1
+			if l % 100 == 0
+				puts "line %s" % l
+			end
 			if lineOfData.length() > 0 # skip blank lines
 				if lineOfData[0][0] != 'D' # skip header lines
 					dateTime = lineOfData[0]
@@ -133,9 +138,9 @@ def createRealData()
 		sensorSubtypeToAdd.type_id = idForThisTypeOfSensor
 		sensorSubtypeToAdd.name = sensorSubtype
 		if thisSensor.GetUse() == true
-			sensorSubtypeToAdd[:usage?] = true
+			sensorSubtypeToAdd[:usage] = true
 		else
-			sensorSubtypeToAdd[:usage?] = false
+			sensorSubtypeToAdd[:usage] = false
 		end
 		sensorSubtypeToAdd.save!
 	end
@@ -170,6 +175,11 @@ def createRealData()
 
 	processCSVFiles()
 end
-
+def AddMore()
+    PutValueIntoDatabase(200000, "2017-09-04 12:41:16", "PV Solar")
+    PutValueIntoDatabase(400000, "2017-09-06 12:41:16", "PV Solar")
+    PutValueIntoDatabase(600000, "2017-09-07 12:41:16", "PV Solar")
+end
 #createTestData()
 createRealData()
+AddMore()

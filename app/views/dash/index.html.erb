@@ -1,0 +1,9 @@
+<div id='dash_container'>
+<%= javascript_tag do %>
+    google.charts.load('current', {'packages':['gauge']});
+    window.gaugeData = new Array(<%= raw @data.as_json %>)[0];
+    console.log(gaugeData)
+    google.charts.setOnLoadCallback(function(){ drawGauge(gaugeData); });
+<% end %>
+<div id="chart_div"></div>
+</div>

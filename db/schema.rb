@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170809202023) do
+ActiveRecord::Schema.define(version: 20170923234629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20170809202023) do
     t.float    "amount"
   end
 
+  add_index "measurements", ["date"], name: "index_measurements_on_date", using: :btree
   add_index "measurements", ["sensor_id"], name: "index_measurements_on_sensor_id", using: :btree
 
   create_table "programs", force: :cascade do |t|
@@ -41,7 +42,7 @@ ActiveRecord::Schema.define(version: 20170809202023) do
   create_table "subtypes", force: :cascade do |t|
     t.integer "type_id"
     t.string  "name"
-    t.boolean "usage?"
+    t.boolean "usage"
   end
 
   add_index "subtypes", ["type_id"], name: "index_subtypes_on_type_id", using: :btree
